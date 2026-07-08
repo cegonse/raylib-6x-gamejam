@@ -48,7 +48,7 @@ target_link_libraries(${PROJECT_NAME} raylib)
 if ("${PLATFORM}" STREQUAL "Web")
     # Tell Emscripten to build an example.html file.
     set_target_properties(${PROJECT_NAME} PROPERTIES SUFFIX ".html")
-    target_link_options(${PROJECT_NAME} PUBLIC -sUSE_GLFW=3 PUBLIC --preload-file resources)
+    target_link_options(${PROJECT_NAME} PUBLIC -sUSE_GLFW=3 PUBLIC --preload-file resources --shell-file ../src/minshell.html)
 endif()
 
 # Checks if OSX and links appropriate frameworks (Only required on MacOS)
