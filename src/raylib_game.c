@@ -100,6 +100,8 @@ static Color logo_c1 = ORANGE;
 static Color logo_c2 = RED;
 static Color logo_c3 = PINK;
 
+static Rectangle play_button_rec;
+
 static Color lerpHue(Color c) {
     Vector3 c_hsv = ColorToHSV(c);
     c_hsv.x = c_hsv.x += 1.0f;
@@ -225,14 +227,7 @@ static void moveTrinketToNext() {
 
 static void initFrame(void)
 {
-    Rectangle rec = {
-        .x = screenWidth / 2 - 200 - 12,
-        .y = screenHeight - 150 - 12,
-        .width = 400,
-        .height = 100
-    };
-
-    start_button_hover = CheckCollisionPointRec(GetMousePosition(), rec);
+    start_button_hover = CheckCollisionPointRec(GetMousePosition(), play_button_rec);
 
     if (start_button_hover && IsMouseButtonPressed(0))
     {
@@ -267,15 +262,7 @@ static void endFrame(void)
 
     camera.position = Vector3Add(end_camera_position, player_position);
 
-
-    Rectangle rec = {
-        .x = screenWidth / 2 - 200 - 12,
-        .y = screenHeight - 150 - 12,
-        .width = 400,
-        .height = 100
-    };
-
-    start_button_hover = CheckCollisionPointRec(GetMousePosition(), rec);
+    start_button_hover = CheckCollisionPointRec(GetMousePosition(), play_button_rec);
 
     if (start_button_hover && IsMouseButtonPressed(0))
     {
@@ -518,16 +505,13 @@ static void render(void)
         DrawText("HEXBOT", logo_x + 2, logo_y + 2, 144, logo_c2);
         DrawText("HEXBOT", logo_x + 4, logo_y + 4, 144, logo_c3);
         DrawText("HEXBOT", logo_x + 8, logo_y + 8, 144, WHITE);
+
+        DrawText("© cesargonzalez.dev 2026 - raylib 6.x gamejam", 10, screenHeight - 24, 18, WHITE);
     }
     
     if (game_state == GAME_STATE_INIT || game_state == GAME_STATE_END)
     {
-        Rectangle rec = {
-            .x = screenWidth / 2 - 200 - 12,
-            .y = screenHeight - 150 - 12,
-            .width = 400,
-            .height = 100
-        };
+        Rectangle rec = play_button_rec;
 
         if (start_button_hover)
         {
@@ -610,6 +594,12 @@ int main(void)
     hexbot_dance = LoadModelAnimations("resources/dance.glb", &num_animations);
     hexbot_spin = LoadModelAnimations("resources/spinning.glb", &num_animations);
     hexbot_macarena = LoadModelAnimations("resources/macarena.glb", &num_animations);
+    play_button_rec = (Rectangle){
+        .x = screenWidth / 2 - 200 - 12,
+        .y = screenHeight - 200,
+        .width = 400,
+        .height = 100
+    };
 
     initGame();
 
